@@ -1,0 +1,40 @@
+# model in BoolNet format
+# the header targets, factors is mandatory to be importable in the R package BoolNet
+
+targets, factors
+# mTOR module
+Insulin,        1
+PI3K,           Insulin
+AKT,            PI3K
+TSC,            AKT
+RHEB,           TSC
+MTOR,           RHEB | !ULK1 AND !AMPK
+# calcium module
+CALPAIN,        Ca2+
+SERCA,          1
+Ca2+,           !SERCA AND IP3R
+CAMKKB,         Ca2+
+AMPK,           CAMKKB AND !MTOR AND !ULK1 AND !P53
+# inositol module
+GA,             CALPAIN
+CAMP,           GA
+PKA,            CAMP
+PLCE,           CAMP
+IP3R,           PLCE AND !BCL2
+PKC,            Ca2+
+# autophagy module
+ULK1,           !MTOR AND AMPK
+ATG5,           !CALPAIN
+BCL2,           1
+BEC1,           !CALPAIN
+PHAG,           ULK1 | UVG AND !IP3R | !PKA
+AUT,            ATG5 ! DRAM
+# apoptosis module
+P53,            !MDM2
+PUMA,           P53
+MDM2,           P53
+BAX,            P53 | TBID
+DRAM,           P53
+CYTC,           BAX | CASP
+CASP,           CYTC
+TBID,           CASP | CALPAIN
