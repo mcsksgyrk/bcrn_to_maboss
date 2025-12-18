@@ -1,0 +1,192 @@
+Node Insulin {
+  logic = (Insulin);
+  rate_up = @logic ? $u_Insulin : 0;
+  rate_down = @logic ? 0 : $d_Insulin;
+}
+
+Node PI3K {
+  logic = (Insulin);
+  rate_up = @logic ? $u_PI3K : 0;
+  rate_down = @logic ? 0 : $d_PI3K;
+}
+
+Node AKT {
+  logic = (PI3K);
+  rate_up = @logic ? $u_AKT : 0;
+  rate_down = @logic ? 0 : $d_AKT;
+}
+
+Node TSC {
+  logic = (AKT);
+  rate_up = @logic ? $u_TSC : 0;
+  rate_down = @logic ? 0 : $d_TSC;
+}
+
+Node RHEB {
+  logic = (TSC);
+  rate_up = @logic ? $u_RHEB : 0;
+  rate_down = @logic ? 0 : $d_RHEB;
+}
+
+Node MTOR {
+  logic = (RHEB & !AMPK & !ULK1);
+  rate_up = @logic ? $u_MTOR : 0;
+  rate_down = @logic ? 0 : $d_MTOR;
+}
+
+Node CALPAIN {
+  logic = (Ca2);
+  rate_up = @logic ? $u_CALPAIN : 0;
+  rate_down = @logic ? 0 : $d_CALPAIN;
+}
+
+Node SERCA {
+  logic = (SERCA);
+  rate_up = @logic ? $u_SERCA : 0;
+  rate_down = @logic ? 0 : $d_SERCA;
+}
+
+Node Ca2 {
+  logic = (!SERCA & IP3R);
+  rate_up = @logic ? $u_Ca2 : 0;
+  rate_down = @logic ? 0 : $d_Ca2;
+}
+
+Node CAMKKB {
+  logic = (Ca2);
+  rate_up = @logic ? $u_CAMKKB : 0;
+  rate_down = @logic ? 0 : $d_CAMKKB;
+}
+
+Node AMPK {
+  logic = (!MTOR & CAMKKB & !ULK1 & !P53);
+  rate_up = @logic ? $u_AMPK : 0;
+  rate_down = @logic ? 0 : $d_AMPK;
+}
+
+Node GA {
+  logic = (CALPAIN);
+  rate_up = @logic ? $u_GA : 0;
+  rate_down = @logic ? 0 : $d_GA;
+}
+
+Node CAMP {
+  logic = (GA);
+  rate_up = @logic ? $u_CAMP : 0;
+  rate_down = @logic ? 0 : $d_CAMP;
+}
+
+Node PKA {
+  logic = (CAMP);
+  rate_up = @logic ? $u_PKA : 0;
+  rate_down = @logic ? 0 : $d_PKA;
+}
+
+Node PLCE {
+  logic = (CAMP);
+  rate_up = @logic ? $u_PLCE : 0;
+  rate_down = @logic ? 0 : $d_PLCE;
+}
+
+Node IP3R {
+  logic = (PLCE & !BCL2);
+  rate_up = @logic ? $u_IP3R : 0;
+  rate_down = @logic ? 0 : $d_IP3R;
+}
+
+Node PKC {
+  logic = (Ca2);
+  rate_up = @logic ? $u_PKC : 0;
+  rate_down = @logic ? 0 : $d_PKC;
+}
+
+Node ULK1 {
+  logic = (!MTOR & AMPK);
+  rate_up = @logic ? $u_ULK1 : 0;
+  rate_down = @logic ? 0 : $d_ULK1;
+}
+
+Node ATG5 {
+  logic = (!CALPAIN);
+  rate_up = @logic ? $u_ATG5 : 0;
+  rate_down = @logic ? 0 : $d_ATG5;
+}
+
+Node BCL2 {
+  logic = (BCL2);
+  rate_up = @logic ? $u_BCL2 : 0;
+  rate_down = @logic ? 0 : $d_BCL2;
+}
+
+Node BEC1 {
+  logic = (!CALPAIN);
+  rate_up = @logic ? $u_BEC1 : 0;
+  rate_down = @logic ? 0 : $d_BEC1;
+}
+
+Node PHAG {
+  logic = (!PKA) | (PKA & !IP3R & !ULK1 & UVG) | (PKA & !IP3R & ULK1) | (PKA & IP3R & ULK1);
+  rate_up = @logic ? $u_PHAG : 0;
+  rate_down = @logic ? 0 : $d_PHAG;
+}
+
+Node AUT {
+  logic = (ATG5 & !DRAM);
+  rate_up = @logic ? $u_AUT : 0;
+  rate_down = @logic ? 0 : $d_AUT;
+}
+
+Node P53 {
+  logic = (P53);
+  rate_up = @logic ? $u_P53 : 0;
+  rate_down = @logic ? 0 : $d_P53;
+}
+
+Node PUMA {
+  logic = (P53);
+  rate_up = @logic ? $u_PUMA : 0;
+  rate_down = @logic ? 0 : $d_PUMA;
+}
+
+Node MDM2 {
+  logic = (P53);
+  rate_up = @logic ? $u_MDM2 : 0;
+  rate_down = @logic ? 0 : $d_MDM2;
+}
+
+Node BAX {
+  logic = (!P53 & TBID) | (P53);
+  rate_up = @logic ? $u_BAX : 0;
+  rate_down = @logic ? 0 : $d_BAX;
+}
+
+Node DRAM {
+  logic = (P53);
+  rate_up = @logic ? $u_DRAM : 0;
+  rate_down = @logic ? 0 : $d_DRAM;
+}
+
+Node CYTC {
+  logic = (!BAX & CASP) | (BAX);
+  rate_up = @logic ? $u_CYTC : 0;
+  rate_down = @logic ? 0 : $d_CYTC;
+}
+
+Node CASP {
+  logic = (CYTC);
+  rate_up = @logic ? $u_CASP : 0;
+  rate_down = @logic ? 0 : $d_CASP;
+}
+
+Node TBID {
+  logic = (!CALPAIN & CASP) | (CALPAIN);
+  rate_up = @logic ? $u_TBID : 0;
+  rate_down = @logic ? 0 : $d_TBID;
+}
+
+Node UVG {
+  logic = (UVG);
+  rate_up = @logic ? $u_UVG : 0;
+  rate_down = @logic ? 0 : $d_UVG;
+}
+

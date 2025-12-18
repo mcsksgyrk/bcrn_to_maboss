@@ -1,0 +1,8 @@
+# model in BoolNet format
+# the header targets, factors is mandatory to be importable in the R package BoolNet
+
+targets, factors
+Autophagy_signal,           Autophagy_signal
+ULK1,                       AMPK&!mTOR
+mTOR,                       !AMPK&!ULK1 
+AMPK,                       (!ULK1&!mTOR)|Autophagy_signal

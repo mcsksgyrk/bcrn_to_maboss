@@ -8,26 +8,26 @@ PI3K,           Insulin
 AKT,            PI3K
 TSC,            AKT
 RHEB,           TSC
-MTOR,           RHEB | !ULK1 AND !AMPK
+MTOR,           RHEB & !ULK1 & !AMPK
 # calcium module
 CALPAIN,        Ca2+
 SERCA,          1
-Ca2+,           !SERCA AND IP3R
+Ca2+,           !SERCA & IP3R
 CAMKKB,         Ca2+
-AMPK,           CAMKKB AND !MTOR AND !ULK1 AND !P53
+AMPK,           CAMKKB & !MTOR & !ULK1 & !P53
 # inositol module
 GA,             CALPAIN
 CAMP,           GA
 PKA,            CAMP
 PLCE,           CAMP
-IP3R,           PLCE AND !BCL2
+IP3R,           PLCE & !BCL2
 PKC,            Ca2+
 # autophagy module
-ULK1,           !MTOR AND AMPK
+ULK1,           !MTOR & AMPK
 ATG5,           !CALPAIN
 BCL2,           1
 BEC1,           !CALPAIN
-PHAG,           ULK1 | UVG AND !IP3R | !PKA
+PHAG,           ULK1 | UVG & !IP3R | !PKA
 AUT,            ATG5 ! DRAM
 # apoptosis module
 P53,            !MDM2
