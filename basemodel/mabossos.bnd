@@ -1,0 +1,18 @@
+Node ULK1 {
+  logic = (!mTOR & PP2A);
+  rate_up = @logic ? $u_ULK1 : 0;
+  rate_down = @logic ? 0 : $d_ULK1;
+}
+
+Node mTOR {
+  logic = (!ULK1 & !PP2A);
+  rate_up = @logic ? $u_mTOR : 0;
+  rate_down = @logic ? 0 : $d_mTOR;
+}
+
+Node PP2A {
+  logic = (ULK1 & !mTOR);
+  rate_up = @logic ? $u_PP2A : 0;
+  rate_down = @logic ? 0 : $d_PP2A;
+}
+
